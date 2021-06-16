@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Stanislav Dunaev](https://up.htmlacademy.ru/react/7/user/602807).
-* Наставник: `Неизвестно`.
+* Наставник: [Герман Топалов](https://htmlacademy.ru/profile/topalov).
 
 ---
 
