@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 
-function Favorites(props) {
+function FavoritesPage(props) {
   return (
     <React.Fragment>
       <div style={{display: 'none'}}>
@@ -173,4 +173,4 @@ function Favorites(props) {
   );
 }
 
-export default Favorites;
+export default FavoritesPage;

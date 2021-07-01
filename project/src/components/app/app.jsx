@@ -3,9 +3,9 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HomePage from '../home-page/home-page';
 import SinginPage from '../singin-page/signin-page';
-import Favorites from '../favorites/favorites';
+import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
-import PageNotFound from '../page-not-found/page-not-found';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 function App(props) {
   const {offerCardsCount} = props;
@@ -19,13 +19,13 @@ function App(props) {
           <SinginPage />
         </Route>
         <Route path="/favorites" exact>
-          <Favorites />
+          <FavoritesPage />
         </Route>
         <Route path="/offer/:id">
           <OfferPage />
         </Route>
         <Route>
-          <PageNotFound />
+          <NotFoundPage />
         </Route>
       </Switch>
     </BrowserRouter>
