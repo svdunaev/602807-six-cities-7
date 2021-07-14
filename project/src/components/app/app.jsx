@@ -3,26 +3,34 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HomePage from '../home-page/home-page';
 import SinginPage from '../singin-page/signin-page';
-import FavoritesPage from '../favorites-page/favorites-page';
+import FavPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
+import { OfferType, ReviewType } from '../../common-prop-types';
 
 function App(props) {
-  const {offerCardsCount} = props;
+  const {cards, reviews} = props;
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <HomePage offerCardsCount={offerCardsCount} />
+          <HomePage
+            cards={cards}
+          />
         </Route>
         <Route path="/login" exact>
           <SinginPage />
         </Route>
         <Route path="/favorites" exact>
-          <FavoritesPage />
+          <FavPage
+            cards={cards}
+          />
         </Route>
         <Route path="/offer/:id">
-          <OfferPage />
+          <OfferPage
+            cards={cards}
+            reviews={reviews}
+          />
         </Route>
         <Route>
           <NotFoundPage />
@@ -33,7 +41,8 @@ function App(props) {
 }
 
 App.propTypes = {
-  offerCardsCount: PropTypes.number.isRequired,
+  cards: PropTypes.arrayOf(OfferType).isRequired,
+  reviews: PropTypes.arrayOf(ReviewType).isRequired,
 };
 
 export default App;

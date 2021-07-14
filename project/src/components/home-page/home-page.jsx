@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
-import OfferItem from '../offer-item/offer-item';
+import OffersList from '../offers-list/offers-list';
+import {OfferType} from '../../common-prop-types';
 
 function HomePage(props) {
-  const {offerCardsCount} = props;
+  const {cards} = props;
   return (
     <React.Fragment>
       <div style={{display: 'none'}}>
@@ -98,9 +99,7 @@ function HomePage(props) {
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {new Array(offerCardsCount).fill(null).map((offer) => <OfferItem key={offer}/>)}
-                </div>
+                <OffersList cards={cards} />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
@@ -114,7 +113,7 @@ function HomePage(props) {
 }
 
 HomePage.propTypes = {
-  offerCardsCount: PropTypes.number.isRequired,
+  cards: PropTypes.arrayOf(OfferType).isRequired,
 };
 
 export default HomePage;
