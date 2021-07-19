@@ -253,7 +253,7 @@ function OfferPage(props) {
 }
 
 OfferPage.propTypes = {
-  cards: PropTypes.shape(OfferType).isRequired,
+  cards: PropTypes.arrayOf(OfferType).isRequired,
   reviews: PropTypes.arrayOf(ReviewType.isRequired),
 };
 
