@@ -1,16 +1,17 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import {OfferType} from '../../common-prop-types';
 
 function OfferCard(props) {
-  const [, setActive] = useState(false);
   const {
     card: {name, price, rating, type, isPremium, isFavorite, previewImage},
     rootClassName,
     imageWrapperClassName,
     infoWrapperClassName,
+    onHover,
   } = props;
 
   OfferCard.defaultProps = {
@@ -20,12 +21,12 @@ function OfferCard(props) {
 
   };
 
-  const handleMouseEnter = useCallback(() => {
-    setActive(true);
-  }, []);
-  const handleMouseLeave = useCallback(() => {
-    setActive(false);
-  }, []);
+  const handleMouseEnter = (evt) => {
+    onHover(props.card);
+  };
+  const handleMouseLeave = () => {
+    onHover(null);
+  };
   return (
     <article className={`place-card ${rootClassName}`}>
       {isPremium && (

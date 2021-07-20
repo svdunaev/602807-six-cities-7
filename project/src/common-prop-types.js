@@ -20,11 +20,11 @@ export const OfferType = PropTypes.exact({
   goods: PropTypes.arrayOf(PropTypes.string).isRequired,
   host: PropTypes.exact({
     avatarUrl: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
     isPro: PropTypes.bool,
     name: PropTypes.string,
   }).isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
@@ -37,11 +37,11 @@ export const OfferType = PropTypes.exact({
 });
 
 export const ReviewType = PropTypes.exact({
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   reviewerName: PropTypes.string.isRequired,
   reviewerImg: PropTypes.string.isRequired,
-  roomId: PropTypes.number.isRequired,
+  roomId: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  discription: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
 });

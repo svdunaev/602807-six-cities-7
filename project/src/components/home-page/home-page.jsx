@@ -1,11 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import OffersList from '../offers-list/offers-list';
 import {OfferType} from '../../common-prop-types';
+import Map from '../map/map';
 
 function HomePage(props) {
   const {cards} = props;
+  const CITY = [{
+    location: [{
+      latitude: 52.38333,
+      longitude: 4.9,
+      zoom: 11,
+    }],
+    name: 'Amsterdam',
+  }];
+  const offersAmsterdam = cards.filter((card) => card.city.name === 'Amsterdam');
+
+  const [activeCard, setActiveCard] = useState(null);
+  const onCardHover = (card) => {
+    setActiveCard(card);
+  };
+
   return (
     <React.Fragment>
       <div style={{display: 'none'}}>
@@ -99,10 +115,19 @@ function HomePage(props) {
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <OffersList cards={cards} />
+                <OffersList
+                  cards={cards}
+                  onHover={onCardHover}
+                />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map
+                    city={CITY}
+                    points={offersAmsterdam}
+                    activeCard={activeCard}
+                  />
+                </section>
               </div>
             </div>
           </div>
