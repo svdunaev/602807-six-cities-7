@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { OfferType } from '../../common-prop-types';
 
 const icon = leaflet.icon({
-  iconUrl: 'img/pin.svg',
+  iconUrl: '/img/pin.svg',
   iconSize: [25, 35],
   iconAnchor: [15, 30],
 });
@@ -40,22 +40,26 @@ function Map(props) {
         )
         .addTo(instance);
 
+      setMap(instance);
+    }
+  }, [map, city, activeCard, points]);
+
+  useEffect(() => {
+    if (map) {
       points.forEach((point) => {
         leaflet
           .marker({
             lat: point.location.latitude,
             lng: point.location.longitude,
           }, {
-            icon: (point.title === activeCard.title)
+            icon: (point === activeCard)
               ? iconActive
               : icon,
           })
-          .addTo(instance);
+          .addTo(map);
       });
-
-      setMap(instance);
     }
-  }, [map, city, activeCard.title, points]);
+  }, [map, points, activeCard]);
 
   return (
     <div
@@ -68,8 +72,8 @@ function Map(props) {
 
 Map.propTypes = {
   points: PropTypes.arrayOf(OfferType).isRequired,
-  city: PropTypes.shape(OfferType.city).isRequired,
-  activeCard: PropTypes.shape(OfferType).isRequired,
+  city: PropTypes.array.isRequired,
+  activeCard: OfferType,
 };
 
 export default Map;

@@ -17,14 +17,10 @@ function HomePage(props) {
   }];
   const offersAmsterdam = cards.filter((card) => card.city.name === 'Amsterdam');
 
-  const [activeCard, setActiveCard] = useState({});
-  const onCardHover = (cardTitle) => {
-    const currentCard = offersAmsterdam.find((point) =>
-      point.title === cardTitle,
-    );
-    setActiveCard(currentCard);
+  const [activeCard, setActiveCard] = useState(null);
+  const onCardHover = (card) => {
+    setActiveCard(card);
   };
-
 
   return (
     <React.Fragment>
@@ -121,7 +117,7 @@ function HomePage(props) {
                 </form>
                 <OffersList
                   cards={cards}
-                  onCardHover={onCardHover}
+                  onHover={onCardHover}
                 />
               </section>
               <div className="cities__right-section">

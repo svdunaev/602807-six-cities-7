@@ -42,6 +42,6 @@ export const ReviewType = PropTypes.exact({
   reviewerImg: PropTypes.string.isRequired,
   roomId: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  discription: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
 });

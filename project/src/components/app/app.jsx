@@ -41,7 +41,7 @@ function App(props) {
 }
 
 App.propTypes = {
-  cards: PropTypes.arrayOf(OfferType).isRequired,
+  cards: PropTypes.arrayOf(OfferType),
   reviews: PropTypes.arrayOf(ReviewType).isRequired,
 };
 
