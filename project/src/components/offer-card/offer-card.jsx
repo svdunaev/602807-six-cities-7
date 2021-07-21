@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
@@ -13,12 +12,6 @@ function OfferCard(props) {
     infoWrapperClassName,
     onHover,
   } = props;
-
-  OfferCard.defaultProps = {
-    rootClassName: '',
-    imageWrapperClassName: '',
-    infoWrapperClassName: '',
-  };
 
   const handleMouseEnter = (evt) => {
     onHover(props.card);
@@ -71,6 +64,12 @@ function OfferCard(props) {
     </article>
   );
 }
+
+OfferCard.defaultProps = {
+  rootClassName: '',
+  imageWrapperClassName: '',
+  infoWrapperClassName: '',
+};
 
 OfferCard.propTypes = OfferType.isRequired;
 
