@@ -7,7 +7,7 @@ import {OfferType} from '../../common-prop-types';
 
 function OfferCard(props) {
   const {
-    card: {name, price, rating, type, isPremium, isFavorite, previewImage},
+    card: {name, price, rating, type, isPremium, isFavorite, previewImage, id},
     rootClassName,
     imageWrapperClassName,
     infoWrapperClassName,
@@ -18,7 +18,6 @@ function OfferCard(props) {
     rootClassName: '',
     imageWrapperClassName: '',
     infoWrapperClassName: '',
-
   };
 
   const handleMouseEnter = (evt) => {
@@ -35,7 +34,7 @@ function OfferCard(props) {
         </div>
       )}
       <div className={`place-card__image-wrapper ${imageWrapperClassName}`}>
-        <Link to="offer/:id"
+        <Link to={`offer/${id}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >

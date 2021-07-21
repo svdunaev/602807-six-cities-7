@@ -1,4 +1,3 @@
-// компонент «Форма отправки комментария»
 import React, {useState} from 'react';
 
 function ReviewForm() {
