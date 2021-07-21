@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import FavLocationsItem from '../fav-locations-item/fav-locations-item';
 import { OfferType } from '../../common-prop-types';
 
-function FavPage(props) {
+function FavoritesPage(props) {
   const {cards} = props;
   const favOffers = Object.entries(cards.reduce((acc, card) => {
     if (!card.isFavorite) {
@@ -74,8 +74,8 @@ function FavPage(props) {
     </React.Fragment>
   );
 }
-FavPage.propTypes = {
+FavoritesPage.propTypes = {
   cards: PropTypes.arrayOf(OfferType).isRequired,
 };
 
-export default FavPage;
+export default FavoritesPage;

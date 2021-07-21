@@ -1,12 +1,12 @@
-// компонент «Форма отправки комментария»
 import React, {useState} from 'react';
 
+const stars = [5,4,3,2,1];
+
 function ReviewForm() {
-  const stars = [5,4,3,2,1];
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  function update(event) {
+  function handleCommentChange(event) {
     setComment(event.target.value);
   }
 
@@ -38,7 +38,7 @@ function ReviewForm() {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
-        onChange={update}
+        onChange={handleCommentChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

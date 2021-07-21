@@ -3,7 +3,7 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import HomePage from '../home-page/home-page';
 import SinginPage from '../singin-page/signin-page';
-import FavPage from '../favorites-page/favorites-page';
+import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { OfferType, ReviewType } from '../../common-prop-types';
@@ -22,7 +22,7 @@ function App(props) {
           <SinginPage />
         </Route>
         <Route path="/favorites" exact>
-          <FavPage
+          <FavoritesPage
             cards={cards}
           />
         </Route>

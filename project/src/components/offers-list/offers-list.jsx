@@ -15,6 +15,7 @@ function OffersList(props) {
           rootClassName="cities__place-card"
           imageWrapperClassName="cities__image-wrapper"
           onHover={onHover}
+          cards={cards}
         />
       ))}
     </div>
