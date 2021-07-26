@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import OfferCard from '../offer-card/offer-card';
 import {OfferType} from '../../common-prop-types';
+import { connect } from 'react-redux';
 
 function OffersList(props) {
   const {cards, onHover} = props;
@@ -26,4 +27,10 @@ OffersList.propTypes = {
   cards: PropTypes.arrayOf(OfferType).isRequired,
 };
 
-export default OffersList;
+const mapStateToProps = (state) => ({
+  cards: state.sortedCityOffers,
+});
+
+
+export {OffersList};
+export default connect(mapStateToProps)(OffersList);

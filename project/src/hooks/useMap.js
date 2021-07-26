@@ -4,15 +4,16 @@ import leaflet from 'leaflet';
 
 function useMap(mapRef, city) {
   const [map, setMap] = useState(null);
+  const [markersGroup, setMarkersGroup] = useState(null);
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: city[0].location[0].latitude,
-          lng: city[0].location[0].longitude,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
-        zoom: city[0].location[0].zoom,
+        zoom: city.location.zoom,
       });
 
       leaflet
@@ -25,10 +26,11 @@ function useMap(mapRef, city) {
         .addTo(instance);
 
       setMap(instance);
+      setMarkersGroup(leaflet.layerGroup().addTo(instance));
     }
   }, [mapRef, city, map]);
 
-  return map;
+  return [map, markersGroup];
 }
 
 export default useMap;

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {useRef, useEffect} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -20,10 +21,13 @@ const iconActive = leaflet.icon({
 function Map(props) {
   const {city, points, activeCard} = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const [map, markersGroup] = useMap(mapRef, city);
+  console.log('active', activeCard);
 
   useEffect(() => {
     if (map) {
+      markersGroup.clearLayers();
+      map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom);
       points.forEach((point) => {
         leaflet
           .marker({
@@ -34,10 +38,10 @@ function Map(props) {
               ? iconActive
               : icon,
           })
-          .addTo(map);
+          .addTo(markersGroup);
       });
     }
-  }, [map, points, activeCard]);
+  }, [markersGroup, points, activeCard, city, map]);
 
   return (
     <div
@@ -50,7 +54,7 @@ function Map(props) {
 
 Map.propTypes = {
   points: PropTypes.arrayOf(OfferType).isRequired,
-  city: PropTypes.array.isRequired,
+  city: PropTypes.object.isRequired,
   activeCard: OfferType,
 };
 

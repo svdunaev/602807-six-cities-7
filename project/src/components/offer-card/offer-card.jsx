@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
@@ -14,9 +15,15 @@ function OfferCard(props) {
   } = props;
 
   const handleMouseEnter = (evt) => {
+    if(!onHover) {
+      return;
+    }
     onHover(props.card);
   };
   const handleMouseLeave = () => {
+    if(!onHover) {
+      return;
+    }
     onHover(null);
   };
   return (
