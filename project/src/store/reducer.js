@@ -1,8 +1,24 @@
 import { ActionType } from './action';
-import { CITIES } from '../constants';
+import { CITIES, SortType } from '../constants';
 import offers from '../mocks/offers';
 
 const defaultCityOffers = offers.filter((offer) => offer.city.name === CITIES[3]);
+
+const sortCityOffers = (cityOffers, sortType) => {
+  switch (sortType) {
+    case SortType.PRICE_LOW_TO_HIGH:
+      return cityOffers.slice().sort((prevOffer, nextOffer) => prevOffer.price - nextOffer.price);
+
+    case SortType.PRICE_HIGH_TO_LOW:
+      return cityOffers.slice().sort((prevOffer, nextOffer) => nextOffer.price - prevOffer.price);
+
+    case SortType.TOP_RATED_FIRST:
+      return cityOffers.slice().sort((prevOffer, nextOffer) => nextOffer.rating - prevOffer.rating);
+
+    default:
+      return cityOffers;
+  }
+};
 
 const initialState = {
   currentCity: CITIES[3],
@@ -33,6 +49,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeOfferId: action.payload,
+      };
+    case ActionType.CHANGE_SORT_TYPE:
+      return {
+        ...state,
+        currentSortType: action.payload,
+        sortedCityOffers: sortCityOffers(state.sortedCityOffers, action.payload),
+        defaultCityOffers: sortCityOffers(state.sortedCityOffers, action.payload),
       };
     default:
       return state;

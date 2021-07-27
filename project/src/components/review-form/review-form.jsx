@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {useState} from 'react';
 
 const stars = [5,4,3,2,1];
@@ -15,7 +16,7 @@ function ReviewForm() {
       <label className="reviews__label form__label" htmlFor="review">Your review ({rating})</label>
       <div className="reviews__rating-form form__rating">
         {stars.map((star) => (
-          <>
+          <React.Fragment key={star}>
             <input
               className="form__rating-input visually-hidden"
               name="rating"
@@ -29,7 +30,7 @@ function ReviewForm() {
                 <use xlinkHref="#icon-star">&nbsp;</use>
               </svg>
             </label>
-          </>
+          </React.Fragment>
         ))}
       </div>
       <textarea
