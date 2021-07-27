@@ -2,6 +2,7 @@ const ActionType = {
   CHANGE_CITY: 'citySelect/changeCity',
   SET_OFFERS: 'citySelect/setOffers',
   CHANGE_ACTIVE_OFFER_ID: 'offerSelect/changeActiveOfferId',
+  CHANGE_SORT_TYPE: 'sort/changeSortType',
 };
 
 const ActionCreator = {
@@ -16,6 +17,10 @@ const ActionCreator = {
   changeActiveOfferId: (id) => ({
     type: ActionType.CHANGE_ACTIVE_OFFER_ID,
     payload: id,
+  }),
+  changeSortType: (sortType) => ({
+    type: ActionType.CHANGE_SORT_TYPE,
+    payload: sortType,
   }),
 };
 

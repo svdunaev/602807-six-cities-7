@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ReviewType } from '../../common-prop-types';
 
 function Review(props) {
@@ -31,7 +30,7 @@ function Review(props) {
 }
 
 Review.propTypes = {
-  review: PropTypes.shape(ReviewType),
+  review: ReviewType,
 };
 
 export default Review;

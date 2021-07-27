@@ -6,12 +6,14 @@ import SinginPage from '../singin-page/signin-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
+import Header from '../header/header';
 import { OfferType, ReviewType } from '../../common-prop-types';
 
 function App(props) {
   const {cards, reviews} = props;
   return (
     <BrowserRouter>
+      <Header />
       <Switch>
         <Route path="/" exact>
           <HomePage
