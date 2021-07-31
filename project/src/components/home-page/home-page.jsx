@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -10,7 +11,9 @@ import SortForm from '../sort-form/sort-form';
 import { connect } from 'react-redux';
 
 function HomePage(props) {
-  const {cards, sortedCityOffers} = props;
+  const {offers, sortedCityOffers} = props;
+  console.log('sortedoffers', sortedCityOffers);
+
   const CITY = sortedCityOffers[0].city;
 
   const [activeCard, setActiveCard] = useState(null);
@@ -38,7 +41,7 @@ function HomePage(props) {
                 <OffersCountTitle />
                 <SortForm />
                 <OffersList
-                  cards={cards}
+                  offers={offers}
                   onHover={onCardHover}
                 />
               </section>
@@ -60,7 +63,7 @@ function HomePage(props) {
 }
 
 HomePage.propTypes = {
-  cards: PropTypes.arrayOf(OfferType).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
   sortedCityOffers: PropTypes.array,
 };
 

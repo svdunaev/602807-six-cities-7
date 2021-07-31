@@ -7,30 +7,32 @@ import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../header/header';
-import { OfferType, ReviewType } from '../../common-prop-types';
+import { ReviewType } from '../../common-prop-types';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { connect } from 'react-redux';
 
 function App(props) {
-  const {cards, reviews} = props;
+  const {reviews, isDataLoaded} = props;
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Header />
       <Switch>
         <Route path="/" exact>
-          <HomePage
-            cards={cards}
-          />
+          <HomePage />
         </Route>
         <Route path="/login" exact>
           <SinginPage />
         </Route>
         <Route path="/favorites" exact>
-          <FavoritesPage
-            cards={cards}
-          />
+          <FavoritesPage />
         </Route>
         <Route path="/offer/:id">
           <OfferPage
-            cards={cards}
             reviews={reviews}
           />
         </Route>
@@ -43,8 +45,13 @@ function App(props) {
 }
 
 App.propTypes = {
-  cards: PropTypes.arrayOf(OfferType),
-  reviews: PropTypes.arrayOf(ReviewType).isRequired,
+  reviews: PropTypes.arrayOf(ReviewType),
+  isDataLoaded: PropTypes.bool,
 };
 
-export default App;
+const mapStateToProps = ({isDataLoaded}) => ({
+  isDataLoaded,
+});
+
+export {App};
+export default connect(mapStateToProps)(App);
