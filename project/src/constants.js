@@ -13,8 +13,23 @@ export const SortType = {
   TOP_RATED_FIRST: 'Top rated first',
 };
 
+export const AppRoute = {
+  ROOT: '/',
+  LOGIN: '/login',
+  FAVORITES: '/favorites',
+  OFFER: '/offer',
+};
+
 export const ApiRoute = {
   OFFERS: '/hotels',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
 };
 
 export const SINGULAR_NUMBER = 1;
