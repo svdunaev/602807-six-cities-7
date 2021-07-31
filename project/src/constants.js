@@ -1,9 +1,9 @@
 export const RoomType = {
-  apartment: 'Apartment',
-  room: 'Private room',
-  house: 'House',
-  hotel: 'Hotel',
-  studio: 'Studio',
+  apartment: 'apartment',
+  room: 'private room',
+  house: 'house',
+  hotel: 'hotel',
+  studio: 'studio',
 };
 
 export const SortType = {
@@ -11,6 +11,10 @@ export const SortType = {
   PRICE_LOW_TO_HIGH: 'Price: low to high',
   PRICE_HIGH_TO_LOW: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
+};
+
+export const ApiRoute = {
+  OFFERS: '/hotels',
 };
 
 export const SINGULAR_NUMBER = 1;

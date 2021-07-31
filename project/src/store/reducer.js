@@ -1,8 +1,5 @@
 import { ActionType } from './action';
 import { CITIES, SortType } from '../constants';
-import offers from '../mocks/offers';
-
-const defaultCityOffers = offers.filter((offer) => offer.city.name === CITIES[3]);
 
 const sortCityOffers = (cityOffers, sortType) => {
   switch (sortType) {
@@ -23,27 +20,30 @@ const sortCityOffers = (cityOffers, sortType) => {
 const initialState = {
   currentCity: CITIES[3],
   offers: [],
-  currentCityOffers: defaultCityOffers,
-  sortedCityOffers: defaultCityOffers,
+  currentCityOffers: [],
+  sortedCityOffers: [],
   activeOfferId: 0,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
-  const currentCityOffers = offers.filter((offer) => offer.city.name === action.payload);
 
   switch (action.type) {
     case ActionType.CHANGE_CITY:
       return {
         ...state,
         currentCity: action.payload,
-        defaultCityOffers: currentCityOffers,
-        sortedCityOffers: currentCityOffers,
+        defaultCityOffers: state.offers.filter(({city}) => city.name === action.payload),
+        sortedCityOffers: state.offers.filter(({city}) => city.name === action.payload),
         activeOfferId: initialState.activeOfferId,
       };
     case ActionType.SET_OFFERS:
       return {
         ...state,
         offers: action.payload,
+        currentCityOffers: action.payload.filter(({city}) => city.name === initialState.currentCity),
+        sortedCityOffers: action.payload.filter(({city}) => city.name === initialState.currentCity),
+        isDataLoaded: true,
       };
     case ActionType.CHANGE_ACTIVE_OFFER_ID:
       return {

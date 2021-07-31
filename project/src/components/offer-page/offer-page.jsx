@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState} from 'react';
@@ -8,13 +9,16 @@ import PropTypes from 'prop-types';
 import { OfferType, ReviewType } from '../../common-prop-types';
 import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
+import { connect } from 'react-redux';
 
 
 function OfferPage(props) {
-  const {cards, reviews} = props;
+  const {offers, reviews} = props;
   const {id} = useParams();
-  const [offerCard] = cards.filter((card) => card.id === id);
-  const nearOffers = cards.filter((nearCard) => nearCard.city.name === offerCard.city.name && nearCard !== offerCard);
+  console.log('offers', offers);
+  const [offerCard] = offers.filter((card) => card.id === Number(id));
+  console.log('offercard', offerCard);
+  const nearOffers = offers.filter((nearCard) => nearCard.city.name === offerCard.city.name && nearCard !== offerCard);
   const CITY = nearOffers[0].city;
 
   const [activeCard, setActiveCard] = useState(null);
@@ -141,7 +145,7 @@ function OfferPage(props) {
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
                 <OffersList
-                  cards={nearOffers}
+                  offers={nearOffers}
                   onHover={onCardHover}
                 />
               </div>
@@ -154,8 +158,13 @@ function OfferPage(props) {
 }
 
 OfferPage.propTypes = {
-  cards: PropTypes.arrayOf(OfferType).isRequired,
-  reviews: PropTypes.arrayOf(ReviewType).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
+  reviews: PropTypes.arrayOf(ReviewType),
 };
 
-export default OfferPage;
+const mapStateToProps = (state) => ({
+  offers: state.sortedCityOffers,
+});
+
+export {OfferPage};
+export default connect(mapStateToProps)(OfferPage);

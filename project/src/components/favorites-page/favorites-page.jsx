@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FavLocationsItem from '../fav-locations-item/fav-locations-item';
 import { OfferType } from '../../common-prop-types';
+import { connect } from 'react-redux';
 
 function FavoritesPage(props) {
-  const {cards} = props;
-  const favOffers = Object.entries(cards.reduce((acc, card) => {
+  const {offers} = props;
+  const favOffers = Object.entries(offers.reduce((acc, card) => {
     if (!card.isFavorite) {
       return acc;
     }
@@ -53,7 +54,12 @@ function FavoritesPage(props) {
   );
 }
 FavoritesPage.propTypes = {
-  cards: PropTypes.arrayOf(OfferType).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
-export default FavoritesPage;
+const mapStateToProps = ({offers}) => ({
+  offers: offers.filter((offer) => offer.isFavorite),
+});
+
+export {FavoritesPage};
+export default connect(mapStateToProps)(FavoritesPage);

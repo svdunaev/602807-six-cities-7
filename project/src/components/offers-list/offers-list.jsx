@@ -6,17 +6,17 @@ import {OfferType} from '../../common-prop-types';
 import { connect } from 'react-redux';
 
 function OffersList(props) {
-  const {cards, onHover} = props;
+  const {offers, onHover} = props;
   return (
     <div className="cities__places-list places__list tabs__content">
-      {cards.map((cardItem) => (
+      {offers.map((cardItem) => (
         <OfferCard
           key={cardItem.id}
           card={cardItem}
           rootClassName="cities__place-card"
           imageWrapperClassName="cities__image-wrapper"
           onHover={onHover}
-          cards={cards}
+          offers={offers}
         />
       ))}
     </div>
@@ -24,11 +24,11 @@ function OffersList(props) {
 }
 
 OffersList.propTypes = {
-  cards: PropTypes.arrayOf(OfferType).isRequired,
+  offers: PropTypes.arrayOf(OfferType).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  cards: state.sortedCityOffers,
+  offers: state.sortedCityOffers,
 });
 
 
