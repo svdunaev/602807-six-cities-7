@@ -1,5 +1,5 @@
 import { ActionType } from './action';
-import { CITIES, SortType } from '../constants';
+import { CITIES, SortType, AuthorizationStatus } from '../constants';
 
 const sortCityOffers = (cityOffers, sortType) => {
   switch (sortType) {
@@ -24,6 +24,8 @@ const initialState = {
   sortedCityOffers: [],
   activeOfferId: 0,
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  userInfo: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,6 +58,18 @@ const reducer = (state = initialState, action) => {
         currentSortType: action.payload,
         sortedCityOffers: sortCityOffers(state.sortedCityOffers, action.payload),
         defaultCityOffers: sortCityOffers(state.sortedCityOffers, action.payload),
+      };
+    case ActionType.LOGIN:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.AUTH,
+        userInfo: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        userInfo: initialState.userInfo,
       };
     default:
       return state;

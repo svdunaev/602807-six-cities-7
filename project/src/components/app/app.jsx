@@ -1,33 +1,39 @@
 import React from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import HomePage from '../home-page/home-page';
 import SinginPage from '../singin-page/signin-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
-import Header from '../header/header';
+import Main from '../main/main';
 import { ReviewType } from '../../common-prop-types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { connect } from 'react-redux';
+import {AppRoute, AuthorizationStatus} from '../../constants';
+import browserHistory from '../../browser-history';
 
 function App(props) {
-  const {reviews, isDataLoaded} = props;
-  if (!isDataLoaded) {
+  const {reviews, isDataLoaded, authorizationStatus} = props;
+  const isCheckedAuthStatus = authorizationStatus !== AuthorizationStatus.UNKNOWN;
+
+  if (!isDataLoaded || !isCheckedAuthStatus) {
     return (
       <LoadingScreen />
     );
   }
   return (
-    <BrowserRouter>
-      <Header />
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/login" exact>
-          <SinginPage />
-        </Route>
+        <Route path={AppRoute.ROOT} exact component={Main}/>
+        <Route
+          path="/login"
+          exact
+          render={
+            () => (authorizationStatus === AuthorizationStatus.NO_AUTH)
+              ? <SinginPage />
+              : <Redirect to={AppRoute.ROOT} />
+          }
+        />
         <Route path="/favorites" exact>
           <FavoritesPage />
         </Route>
@@ -47,10 +53,12 @@ function App(props) {
 App.propTypes = {
   reviews: PropTypes.arrayOf(ReviewType),
   isDataLoaded: PropTypes.bool,
+  authorizationStatus: PropTypes.string,
 };
 
-const mapStateToProps = ({isDataLoaded}) => ({
+const mapStateToProps = ({isDataLoaded, authorizationStatus}) => ({
   isDataLoaded,
+  authorizationStatus,
 });
 
 export {App};

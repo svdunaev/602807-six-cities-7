@@ -11,10 +11,14 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import { createApi } from './services/api';
 import { loadOffers } from './store/api-action';
 import reviews from './mocks/reviews';
+import { redirect } from './store/middleware/redirect';
 
 const api = createApi();
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+const store = createStore(reducer, composeWithDevTools(
+  applyMiddleware(thunk.withExtraArgument(api)),
+  applyMiddleware(redirect),
+));
 
 store.dispatch(loadOffers());
 
