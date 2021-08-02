@@ -1,37 +1,114 @@
-/* eslint-disable no-console */
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
+import RatingChanger from '../rating-changer/rating-changer';
+import {connect} from 'react-redux';
+import {AuthorizationStatus} from '../../constants';
+import {postReview} from '../../store/api-action';
+import HelpMessage from '../help-msg/help-msg';
+import PostErrorMessage from '../post-error-msg/post-error-msg';
 
-const stars = [5,4,3,2,1];
 
-function ReviewForm() {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+const ERROR_MESSAGE_SHOW_TIME = 5000;
 
-  function handleCommentChange(event) {
-    setComment(event.target.value);
+const CommentLength = {
+  MIN: 50,
+  MAX: 300,
+};
+
+const RatingValuesMap = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect',
+};
+
+
+function ReviewsForm({authorizationStatus, offerId, sendReview, updateReviewsList}) {
+  const initialState = {
+    rating: '',
+    comment: '',
+    isBlocked: false,
+    isNeedErrorMessage: false,
+  };
+
+  const [state, setState] = useState(initialState);
+  const {rating, comment, isBlocked, isNeedErrorMessage} = state;
+
+
+  const isUserAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
+
+  if (!isUserAuthorized) {
+    return '';
   }
 
+
+  const isStateValid = rating && comment.length > CommentLength.MIN && comment.length < CommentLength.MAX;
+
+  const onSendSuccess = () => setState(initialState);
+
+  const onSendFail = () => {
+    setState((prevState) => ({
+      ...prevState,
+      isNeedErrorMessage: true,
+    }));
+
+    setTimeout(() => {
+      setState((prevState) => ({
+        ...prevState,
+        isNeedErrorMessage: false,
+        isBlocked: false,
+      }));
+    }, ERROR_MESSAGE_SHOW_TIME);
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    const newReview = {
+      comment,
+      rating,
+    };
+
+    setState((prevState) => ({
+      ...prevState,
+      isBlocked: true,
+    }));
+
+    sendReview(offerId, newReview)
+      .then((reviews) => updateReviewsList(reviews))
+      .then(() => onSendSuccess())
+      .catch(() => onSendFail());
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
-      <label className="reviews__label form__label" htmlFor="review">Your review ({rating})</label>
+    <form
+      className="reviews__form form"
+      action="#"
+      onSubmit={handleSubmit}
+    >
+      <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {stars.map((star) => (
-          <React.Fragment key={star}>
-            <input
-              className="form__rating-input visually-hidden"
-              name="rating"
-              value={rating}
-              id={`${star}-stars`}
-              type="radio"
-              onChange={() => {setRating(star);}}
-            />
-            <label htmlFor={`${star}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star">&nbsp;</use>
-              </svg>
-            </label>
-          </React.Fragment>
-        ))}
+        {
+          Object
+            .keys(RatingValuesMap)
+            .sort((valueA, valueB) => valueB - valueA)
+            .map((value) => (
+              <RatingChanger
+                key={value}
+                value={value}
+                title={RatingValuesMap[value]}
+                currentRatingValue={rating}
+                changeHandler={
+                  ({target}) => setState((prevState) => ({
+                    ...prevState,
+                    rating: target.value,
+                  }))
+                }
+                isDisabled={isBlocked}
+              />
+            ))
+        }
       </div>
       <textarea
         className="reviews__textarea form__textarea"
@@ -39,17 +116,40 @@ function ReviewForm() {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
-        onChange={handleCommentChange}
+        required
+        onChange={({target}) => setState((prevState) => ({
+          ...prevState,
+          comment: target.value,
+        }))}
+        disabled={isBlocked}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">50 characters</b>.
+          {isNeedErrorMessage ? <PostErrorMessage /> : <HelpMessage />}
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={!isStateValid || isBlocked}>Submit</button>
       </div>
     </form>
   );
 }
 
-export default ReviewForm;
+ReviewsForm.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+  offerId: PropTypes.string.isRequired,
+  sendReview: PropTypes.func.isRequired,
+  updateReviewsList: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({authorizationStatus}) => ({
+  authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  sendReview(offerId, newReview) {
+    return dispatch(postReview(offerId, newReview));
+  },
+});
+
+
+export {ReviewsForm};
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewsForm);

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { connect } from 'react-redux';
 import { CITIES } from '../../constants';
@@ -8,7 +7,6 @@ import PropTypes from 'prop-types';
 
 function CitiesList(props) {
   const {currentCity, changeCity} = props;
-  console.log(props);
   return (
     <ul className="locations__list tabs__list">
       {

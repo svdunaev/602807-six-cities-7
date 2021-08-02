@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, {useRef, useEffect} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -22,7 +21,6 @@ function Map(props) {
   const {city, points, activeCard} = props;
   const mapRef = useRef(null);
   const [map, markersGroup] = useMap(mapRef, city);
-  console.log('active', activeCard);
 
   useEffect(() => {
     if (map) {

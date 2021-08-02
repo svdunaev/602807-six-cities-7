@@ -1,24 +1,18 @@
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState} from 'react';
 import { useParams } from 'react-router-dom';
-import ReviewsList from '../reviews-list/reviews-list';
-import ReviewForm from '../review-form/review-form';
 import PropTypes from 'prop-types';
-import { OfferType, ReviewType } from '../../common-prop-types';
+import { OfferType } from '../../common-prop-types';
 import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
 import { connect } from 'react-redux';
 import Header from '../header/header';
+import ReviewsBoard from '../reviews-board/reviews-board';
 
 
 function OfferPage(props) {
-  const {offers, reviews} = props;
+  const {offers} = props;
   const {id} = useParams();
-  console.log('offers', offers);
   const [offerCard] = offers.filter((card) => card.id === Number(id));
-  console.log('offercard', offerCard);
   const nearOffers = offers.filter((nearCard) => nearCard.city.name === offerCard.city.name && nearCard !== offerCard);
   const CITY = nearOffers[0].city;
 
@@ -49,7 +43,7 @@ function OfferPage(props) {
               <div className="property__gallery">
                 {offerCard.images.map((image) => (
                   <div className="property__image-wrapper" key={image}>
-                    <img className="property__image" src={image} alt="Photo studio"/>
+                    <img className="property__image" src={image} alt="studio"/>
                   </div>
                 ))}
               </div>
@@ -129,8 +123,7 @@ function OfferPage(props) {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <ReviewsList reviews={reviews}/>
-                  <ReviewForm />
+                  <ReviewsBoard offerId={id}/>
                 </section>
               </div>
             </div>
@@ -161,7 +154,6 @@ function OfferPage(props) {
 
 OfferPage.propTypes = {
   offers: PropTypes.arrayOf(OfferType).isRequired,
-  reviews: PropTypes.arrayOf(ReviewType),
 };
 
 const mapStateToProps = (state) => ({

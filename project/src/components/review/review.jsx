@@ -1,5 +1,12 @@
 import React from 'react';
 import { ReviewType } from '../../common-prop-types';
+import {formatDate} from '../../utils/formatdate';
+
+const DateFormatTemplate = {
+  STANDART: 'YYYY-MM-DD',
+  HUMANIZE: 'MMMM YYYY',
+};
+
 
 function Review(props) {
   const {review} = props;
@@ -7,10 +14,10 @@ function Review(props) {
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={review.reviewerImg} width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
-          {review.reviewerName}
+          {review.user.name}
         </span>
       </div>
       <div className="reviews__info">
@@ -21,9 +28,9 @@ function Review(props) {
           </div>
         </div>
         <p className="reviews__text">
-          {review.description}
+          {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+        <time className="reviews__time" dateTime={formatDate(review.date, DateFormatTemplate.STANDART)}>{formatDate(review.date, DateFormatTemplate.HUMANIZE)}</time>
       </div>
     </li>
   );

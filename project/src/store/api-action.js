@@ -1,6 +1,6 @@
 import {ActionCreator} from './action';
 import {ApiRoute, AppRoute} from '../constants';
-import {adaptOfferToClient, adaptUserInfoToClient} from '../utils/adapter';
+import {adaptOfferToClient, adaptReviewToClient, adaptUserInfoToClient} from '../utils/adapter';
 
 
 const loadOffers = () => (dispatch, _getState, api) => (
@@ -32,5 +32,14 @@ const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(ActionCreator.logout()))
 );
 
+const getReviews = (offerId) => (_dispatch, _getState, api) => (
+  api.get(`${ApiRoute.REVIEWS}/${offerId}`)
+    .then(({data}) => data.map((review) => adaptReviewToClient(review)))
+);
 
-export {loadOffers, checkAuth, login, logout};
+const postReview = (offerId, newReview) => (_dispatch, _getState, api) => (
+  api.post(`${ApiRoute.REVIEWS}/${offerId}`, newReview)
+    .then(({data}) => data.map((review) => adaptReviewToClient(review)))
+);
+
+export {loadOffers, checkAuth, login, logout, getReviews, postReview};
