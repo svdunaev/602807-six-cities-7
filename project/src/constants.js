@@ -1,6 +1,6 @@
 export const RoomType = {
   apartment: 'apartment',
-  room: 'private room',
+  room: 'room',
   house: 'house',
   hotel: 'hotel',
   studio: 'studio',
@@ -24,6 +24,7 @@ export const ApiRoute = {
   OFFERS: '/hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  REVIEWS: '/comments',
 };
 
 export const AuthorizationStatus = {

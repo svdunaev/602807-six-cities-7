@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {OfferType} from '../../common-prop-types';
@@ -38,7 +36,7 @@ function OfferCard(props) {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <img className="place-card__image" src={previewImage} style={{width: '260px', height: '200px'}} alt="Place image" />
+          <img className="place-card__image" src={previewImage} style={{width: '260px', height: '200px'}} alt="Place" />
         </Link>
       </div>
       <div className={`place-card__info ${infoWrapperClassName}`}>

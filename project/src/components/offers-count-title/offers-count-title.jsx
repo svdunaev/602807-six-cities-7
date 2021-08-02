@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { SINGULAR_NUMBER } from '../../constants';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -6,7 +5,6 @@ import { connect } from 'react-redux';
 
 function OffersCountTitle(props) {
   const {offersCount, currentCity} = props;
-  console.log('offerscount', offersCount);
 
   return (
     <>

@@ -6,6 +6,7 @@ const ActionType = {
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
   REDIRECTTOROUTE: 'redirect/redirectToRoute',
+  SET_COMMENTS: 'data/setComments',
 };
 
 const ActionCreator = {
@@ -16,6 +17,10 @@ const ActionCreator = {
   setOffers: (offers) => ({
     type: ActionType.SET_OFFERS,
     payload: offers,
+  }),
+  setComments: (comments) => ({
+    type: ActionType.SET_COMMENTS,
+    payload: comments,
   }),
   changeActiveOfferId: (id) => ({
     type: ActionType.CHANGE_ACTIVE_OFFER_ID,

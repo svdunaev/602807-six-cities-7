@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import OffersList from '../offers-list/offers-list';
@@ -12,7 +10,6 @@ import { connect } from 'react-redux';
 
 function HomePage(props) {
   const {offers, sortedCityOffers} = props;
-  console.log('sortedoffers', sortedCityOffers);
 
   const CITY = sortedCityOffers[0].city;
 
@@ -63,7 +60,7 @@ function HomePage(props) {
 }
 
 HomePage.propTypes = {
-  offers: PropTypes.arrayOf(OfferType).isRequired,
+  offers: PropTypes.arrayOf(OfferType),
   sortedCityOffers: PropTypes.array,
 };
 
