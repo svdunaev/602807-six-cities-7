@@ -8,12 +8,10 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import { createApi } from './services/api';
+import { api } from './services/api';
 import { loadOffers } from './store/api-action';
 import reviews from './mocks/reviews';
 import { redirect } from './store/middleware/redirect';
-
-const api = createApi();
 
 const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(thunk.withExtraArgument(api)),

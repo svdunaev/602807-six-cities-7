@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import OffersList from '../offers-list/offers-list';
-import {OfferType} from '../../common-prop-types';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
 import OffersCountTitle from '../offers-count-title/offers-count-title';
 import SortForm from '../sort-form/sort-form';
 import { connect } from 'react-redux';
+import { getSortedCityOffers } from '../selectors/selectors';
 
 function HomePage(props) {
-  const {offers, sortedCityOffers} = props;
-
-  const CITY = sortedCityOffers[0].city;
+  const {offers} = props;
 
   const [activeCard, setActiveCard] = useState(null);
   const onCardHover = (card) => {
@@ -45,8 +43,8 @@ function HomePage(props) {
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    city={CITY}
-                    points={sortedCityOffers}
+                    city={offers[0].city}
+                    points={offers}
                     activeCard={activeCard}
                   />
                 </section>
@@ -60,12 +58,11 @@ function HomePage(props) {
 }
 
 HomePage.propTypes = {
-  offers: PropTypes.arrayOf(OfferType),
-  sortedCityOffers: PropTypes.array,
+  offers: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
-  sortedCityOffers: state.sortedCityOffers,
+  offers: getSortedCityOffers(state),
 });
 
 export {HomePage};

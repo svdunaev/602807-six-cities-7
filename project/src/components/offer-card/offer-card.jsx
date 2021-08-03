@@ -13,13 +13,13 @@ function OfferCard(props) {
   } = props;
 
   const handleMouseEnter = (evt) => {
-    if(!onHover) {
+    if (!onHover) {
       return;
     }
     onHover(props.card);
   };
   const handleMouseLeave = () => {
-    if(!onHover) {
+    if (!onHover) {
       return;
     }
     onHover(null);
@@ -32,7 +32,7 @@ function OfferCard(props) {
         </div>
       )}
       <div className={`place-card__image-wrapper ${imageWrapperClassName}`}>
-        <Link to={`offer/${id}`}
+        <Link to={`/offer/${id}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
