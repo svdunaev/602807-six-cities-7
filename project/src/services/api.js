@@ -8,8 +8,8 @@ const HttpCode = {
 
 const token = localStorage.getItem('token') ?? '';
 
-export const createApi = (onUnauthorized) => {
-  const api = axios.create({
+const createApi = (onUnauthorized) => {
+  const axiosInstance = axios.create({
     baseURL: BASE_URL,
     timeout: 5000,
     headers: {
@@ -29,6 +29,8 @@ export const createApi = (onUnauthorized) => {
     throw err;
   };
 
-  api.interceptors.response.use(onSuccess, onFail);
-  return api;
+  axiosInstance.interceptors.response.use(onSuccess, onFail);
+  return axiosInstance;
 };
+
+export const api = createApi();

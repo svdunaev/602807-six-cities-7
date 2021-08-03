@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -8,7 +9,6 @@ import PropTypes from 'prop-types';
 function Header(props) {
   const {authorizationStatus, onSignOutClick, avatar, email} = props;
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
-
   return (
     <header className="header">
       <div className="container">

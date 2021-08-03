@@ -1,6 +1,7 @@
 import {ActionCreator} from './action';
 import {ApiRoute, AppRoute} from '../constants';
 import {adaptOfferToClient, adaptReviewToClient, adaptUserInfoToClient} from '../utils/adapter';
+import { api as apiInstance } from '../services/api';
 
 
 const loadOffers = () => (dispatch, _getState, api) => (
@@ -15,6 +16,16 @@ const checkAuth = () => (dispatch, _getState, api) => (
       dispatch(ActionCreator.login(adaptUserInfoToClient(data)));
     })
     .catch(() => {})
+);
+
+const getOfferById = (id) => (
+  apiInstance.get(`${ApiRoute.OFFERS}/${id}`)
+    .then(({data}) => adaptOfferToClient(data))
+);
+
+const getNearbyOffers = (id) => (
+  apiInstance.get(`${ApiRoute.OFFERS}/${id}/nearby`)
+    .then(({data}) => data.map((offer) => adaptOfferToClient(offer)))
 );
 
 const login = (authData) => (dispatch, _getState, api) => (
@@ -42,4 +53,4 @@ const postReview = (offerId, newReview) => (_dispatch, _getState, api) => (
     .then(({data}) => data.map((review) => adaptReviewToClient(review)))
 );
 
-export {loadOffers, checkAuth, login, logout, getReviews, postReview};
+export {loadOffers, checkAuth, login, logout, getReviews, postReview, getOfferById, getNearbyOffers};
