@@ -2,7 +2,6 @@ const ActionType = {
   CHANGE_CITY: 'citySelect/changeCity',
   SET_OFFERS: 'citySelect/setOffers',
   SET_OFFERS_FAIL: 'citySelect/setOffersFail',
-  CHANGE_ACTIVE_OFFER_ID: 'offerSelect/changeActiveOfferId',
   CHANGE_SORT_TYPE: 'sort/changeSortType',
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
@@ -26,10 +25,6 @@ const ActionCreator = {
   setComments: (comments) => ({
     type: ActionType.SET_COMMENTS,
     payload: comments,
-  }),
-  changeActiveOfferId: (id) => ({
-    type: ActionType.CHANGE_ACTIVE_OFFER_ID,
-    payload: id,
   }),
   changeSortType: (sortType) => ({
     type: ActionType.CHANGE_SORT_TYPE,
