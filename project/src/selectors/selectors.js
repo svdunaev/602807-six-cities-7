@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import { SortType } from '../../constants';
+import { SortType } from '../constants';
 
 const getOffers = (state) => state.offers;
 const getCurrentCity = (state) => state.currentCity;

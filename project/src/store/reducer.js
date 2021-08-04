@@ -1,15 +1,14 @@
 import { ActionType } from './action';
-import { CITIES, AuthorizationStatus } from '../constants';
+import { CITIES, AuthorizationStatus, SortType } from '../constants';
 
 const initialState = {
   currentCity: CITIES[3],
   offers: [],
-  currentCityOffers: [],
-  sortedCityOffers: [],
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   userInfo: {},
-  currentSortType: 'Popular',
+  currentSortType: SortType.POPULAR,
+  isAppError: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,6 +23,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
+        isDataLoaded: true,
+      };
+    case ActionType.SET_OFFERS_FAIL:
+      return {
+        ...state,
         isDataLoaded: true,
       };
     case ActionType.CHANGE_SORT_TYPE:
@@ -42,6 +46,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
         userInfo: initialState.userInfo,
+      };
+    case ActionType.SET_APP_ERROR:
+      return {
+        ...state,
+        isAppError: true,
       };
     default:
       return state;

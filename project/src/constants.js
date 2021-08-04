@@ -1,9 +1,9 @@
 export const RoomType = {
-  apartment: 'apartment',
-  room: 'room',
-  house: 'house',
-  hotel: 'hotel',
-  studio: 'studio',
+  APARTMENT: 'apartment',
+  ROOM: 'room',
+  HOUSE: 'house',
+  HOTEL: 'hotel',
+  STUDIO: 'studio',
 };
 
 export const SortType = {
@@ -25,6 +25,7 @@ export const ApiRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   REVIEWS: '/comments',
+  FAROVITES: '/favorite',
 };
 
 export const AuthorizationStatus = {
@@ -33,6 +34,13 @@ export const AuthorizationStatus = {
   UNKNOWN: 'UNKNOWN',
 };
 
+export const RESULT = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+};
+
 export const SINGULAR_NUMBER = 1;
+
+export const API_REFRESH_TIMEOUT = 300;
 
 export const CITIES = ['Amsterdam', 'Cologne', 'Dusseldorf', 'Paris', 'Brussels', 'Hamburg'];

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReviewType } from '../../common-prop-types';
 import {formatDate} from '../../utils/formatdate';
+import { getRatingInPercents } from '../../utils/common';
 
 const DateFormatTemplate = {
   STANDART: 'YYYY-MM-DD',
@@ -23,7 +24,7 @@ function Review(props) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${Math.floor(review.rating) * 100 / 5}%`}}>&nbsp;</span>
+            <span style={{width: `${getRatingInPercents(review.rating)}%`}}>&nbsp;</span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

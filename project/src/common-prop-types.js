@@ -28,7 +28,7 @@ export const OfferType = PropTypes.exact({
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
-  type: PropTypes.oneOf([RoomType.apartment, RoomType.hotel, RoomType.house, RoomType.room, RoomType.studio]).isRequired,
+  type: PropTypes.oneOf([RoomType.APARTMENT, RoomType.HOTEL, RoomType.HOUSE, RoomType.ROOM, RoomType.STUDIO]).isRequired,
   isPremium: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,

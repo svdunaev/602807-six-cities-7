@@ -51,7 +51,7 @@ function SortForm(props) {
 }
 
 SortForm.propTypes = {
-  currentSortType: PropTypes.string,
+  currentSortType: PropTypes.string.isRequired,
   changeSortType: PropTypes.func.isRequired,
 };
 

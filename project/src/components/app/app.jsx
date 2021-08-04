@@ -10,10 +10,15 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { connect } from 'react-redux';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import browserHistory from '../../browser-history';
+import PrivateRoute from '../private-route/private-route';
 
 function App(props) {
-  const {isDataLoaded, authorizationStatus} = props;
+  const {isDataLoaded, authorizationStatus, isAppError} = props;
   const isCheckedAuthStatus = authorizationStatus !== AuthorizationStatus.UNKNOWN;
+
+  if (isAppError) {
+    return <div>Api unavailable</div>;
+  }
 
   if (!isDataLoaded || !isCheckedAuthStatus) {
     return (
@@ -33,10 +38,12 @@ function App(props) {
               : <Redirect to={AppRoute.ROOT} />
           }
         />
-        <Route path="/favorites" exact>
-          <FavoritesPage />
-        </Route>
-        <Route path="/offer/:id">
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <FavoritesPage/>}
+        />
+        <Route path={`${AppRoute.OFFER}/:id`}>
           <OfferPage/>
         </Route>
         <Route>
@@ -48,13 +55,15 @@ function App(props) {
 }
 
 App.propTypes = {
-  isDataLoaded: PropTypes.bool,
-  authorizationStatus: PropTypes.string,
+  isDataLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  isAppError: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({isDataLoaded, authorizationStatus}) => ({
+const mapStateToProps = ({isDataLoaded, authorizationStatus, isAppError}) => ({
   isDataLoaded,
   authorizationStatus,
+  isAppError,
 });
 
 export {App};

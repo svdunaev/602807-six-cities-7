@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {login} from '../../store/api-action';
 import Header from '../header/header';
 
+const EMAIL_RE = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function SignIn (props) {
   const {onSubmit} = props;
@@ -17,6 +18,18 @@ function SignIn (props) {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     });
+  };
+
+  const onLoginInput = () => {
+    const email = emailRef.current.value;
+    let validationMessage = '';
+
+    if (!email || !EMAIL_RE.test(email)) {
+      validationMessage = 'Некорректный email';
+    }
+
+    emailRef.current.setCustomValidity(validationMessage);
+    emailRef.current.reportValidity();
   };
 
   const onPasswordInput = () => {
@@ -51,6 +64,7 @@ function SignIn (props) {
                   name="email"
                   placeholder="Email"
                   ref={emailRef}
+                  onInput={onLoginInput}
                   required
                 />
               </div>

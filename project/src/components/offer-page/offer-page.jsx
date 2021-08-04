@@ -1,11 +1,18 @@
 import React, { useCallback, useEffect, useReducer, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
 import Header from '../header/header';
 import ReviewsBoard from '../reviews-board/reviews-board';
-import { getOfferById, getNearbyOffers } from '../../store/api-action';
+import { getOfferById, getNearbyOffers, toggleFavoriteOffer, loadOffers } from '../../store/api-action';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { getRatingInPercents } from '../../utils/common';
+import { AppRoute, AuthorizationStatus, API_REFRESH_TIMEOUT } from '../../constants';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+const IMAGES_MAX_COUNT = 6;
+const NEARBY_OFFERS_MAX_COUNT = 3;
 
 const initialState = {
   isFetching: true,
@@ -16,16 +23,14 @@ const initialState = {
 
 const reducer = (state, payload) => ({ ...state, ...payload });
 
-
-function OfferPage() {
-
+function OfferPage(props) {
+  const {fetchAllOffers, authorizationStatus} = props;
   const [
     { isFetching, isError, offer, nearbyOffers },
     dispatch,
   ] = useReducer(reducer, initialState);
 
   const {id} = useParams();
-
 
   const fetchOffers = useCallback(async () => {
     try {
@@ -43,19 +48,44 @@ function OfferPage() {
     }
   }, [id]);
 
+  const handleFavoriteToggle = useCallback(() => {
+    fetchOffers();
+  }, [fetchOffers]);
+
   useEffect(() => {
     fetchOffers();
   }, [fetchOffers]);
 
   const offersOnMap = useMemo(() => {
     let results = [offer];
-    if (nearbyOffers.length > 3) {
-      results = [...results, ...nearbyOffers.slice(0, 2)];
+    if (nearbyOffers.length > NEARBY_OFFERS_MAX_COUNT) {
+      results = [...results, ...nearbyOffers.slice(0, NEARBY_OFFERS_MAX_COUNT)];
     } else {
       results = [...results, ...nearbyOffers];
     }
     return results;
   }, [nearbyOffers, offer]);
+
+  const getImagesInGallery = () => {
+    if (offer.images.length > IMAGES_MAX_COUNT) {
+      return [...offer.images.slice(0, IMAGES_MAX_COUNT)];
+    }
+    return offer.images;
+  };
+
+  const history = useHistory();
+
+  const handleFavoriteClick = useCallback(async (evt) => {
+    evt.preventDefault();
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      history.push(AppRoute.LOGIN);
+    }
+    await toggleFavoriteOffer(offer.id, Number(!offer.isFavorite));
+    setTimeout(() => {
+      fetchOffers();
+      fetchAllOffers();
+    }, API_REFRESH_TIMEOUT);
+  }, [history, offer, authorizationStatus, fetchOffers, fetchAllOffers]);
 
   return (
     <React.Fragment>
@@ -78,8 +108,8 @@ function OfferPage() {
             <section className="property">
               <div className="property__gallery-container container">
                 <div className="property__gallery">
-                  {offer.images.map((image) => (
-                    <div className="property__image-wrapper" key={image}>
+                  {getImagesInGallery().map((image) => (
+                    <div className="property__image-wrapper" key={image} >
                       <img className="property__image" src={image} alt="studio"/>
                     </div>
                   ))}
@@ -96,10 +126,7 @@ function OfferPage() {
                     <h1 className="property__name">
                       {offer.title}
                     </h1>
-                    <button
-                      className={`property__bookmark-button button ${offer.isFavorite && 'property__bookmark-button--active'}`}
-                      type="button"
-                    >
+                    <button className={`property__bookmark-button ${offer.isFavorite ?'property__bookmark-button--active' : ''} button`} type="button" onClick={handleFavoriteClick}>
                       <svg className="property__bookmark-icon" width="31" height="33">
                         <use xlinkHref="#icon-bookmark" />
                       </svg>
@@ -108,10 +135,10 @@ function OfferPage() {
                   </div>
                   <div className="property__rating rating">
                     <div className="property__stars rating__stars">
-                      <span style={{width: '80%'}}></span>
+                      <span style={{width: `${getRatingInPercents(offer.rating)}%`}}/>
                       <span className="visually-hidden">Rating</span>
                     </div>
-                    <span className="property__rating-value rating__value">4.8</span>
+                    <span className="property__rating-value rating__value">{offer.rating}</span>
                   </div>
                   <ul className="property__features">
                     <li className="property__feature property__feature--entire">
@@ -181,6 +208,7 @@ function OfferPage() {
                   <div className="near-places__list places__list">
                     <OffersList
                       offers={nearbyOffers}
+                      onFavoriteToggle={handleFavoriteToggle}
                     />
                   </div>
                 </section>
@@ -193,4 +221,20 @@ function OfferPage() {
   );
 }
 
-export default OfferPage;
+OfferPage.propTypes = {
+  authorizationStatus: PropTypes.string,
+  fetchAllOffers: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchAllOffers() {
+    dispatch(loadOffers());
+  },
+});
+
+export {OfferPage};
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);

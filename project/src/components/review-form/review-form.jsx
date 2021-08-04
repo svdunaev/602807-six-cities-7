@@ -39,9 +39,8 @@ function ReviewsForm({authorizationStatus, offerId, sendReview, updateReviewsLis
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
 
   if (!isUserAuthorized) {
-    return '';
+    return null;
   }
-
 
   const isStateValid = rating && comment.length > CommentLength.MIN && comment.length < CommentLength.MAX;
 

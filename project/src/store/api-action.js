@@ -1,13 +1,14 @@
 import {ActionCreator} from './action';
 import {ApiRoute, AppRoute} from '../constants';
 import {adaptOfferToClient, adaptReviewToClient, adaptUserInfoToClient} from '../utils/adapter';
-import { api as apiInstance } from '../services/api';
+import { api as apiInstance } from '../index';
 
 
 const loadOffers = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.OFFERS)
     .then(({data}) => data.map((offer) => adaptOfferToClient(offer)))
     .then((offers) => dispatch(ActionCreator.setOffers(offers)))
+    .catch(() => dispatch(ActionCreator.setOffersFail()))
 );
 
 const checkAuth = () => (dispatch, _getState, api) => (
@@ -15,7 +16,6 @@ const checkAuth = () => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(ActionCreator.login(adaptUserInfoToClient(data)));
     })
-    .catch(() => {})
 );
 
 const getOfferById = (id) => (
@@ -53,4 +53,14 @@ const postReview = (offerId, newReview) => (_dispatch, _getState, api) => (
     .then(({data}) => data.map((review) => adaptReviewToClient(review)))
 );
 
-export {loadOffers, checkAuth, login, logout, getReviews, postReview, getOfferById, getNearbyOffers};
+const fetchFavoriteOffers = () => (
+  apiInstance.get(ApiRoute.FAROVITES)
+    .then(({data}) => data.map((offer) => adaptOfferToClient(offer)))
+);
+
+const toggleFavoriteOffer = (id, status)  => {
+  apiInstance.post(`${ApiRoute.FAROVITES}/${id}/${status}`)
+    .then(({data}) => adaptOfferToClient(data));
+};
+
+export {loadOffers, checkAuth, login, logout, getReviews, postReview, getOfferById, getNearbyOffers, fetchFavoriteOffers, toggleFavoriteOffer };
