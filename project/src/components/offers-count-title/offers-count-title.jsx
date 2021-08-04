@@ -2,7 +2,7 @@ import { SINGULAR_NUMBER } from '../../constants';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentCityOffers } from '../selectors/selectors';
+import { getCurrentCityOffers } from '../../selectors/selectors';
 
 function OffersCountTitle(props) {
   const {offersCount, currentCity} = props;
