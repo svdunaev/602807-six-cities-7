@@ -1,49 +1,35 @@
-# Личный проект «Шесть городов»
+# Six Cities
 
-* Студент: [Stanislav Dunaev](https://up.htmlacademy.ru/react/7/user/602807).
-* Наставник: [Герман Топалов](https://htmlacademy.ru/profile/topalov).
+Stack:
+* React
+* Redux
+* React router
+* leaflet
+* axios
+* firebase
+
+[deployed app](https://six-cities-b3f34.web.app/)
 
 ---
 
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`._
-
----
-
-### Памятка
-
-#### 1. Зарегистрируйтесь на Гитхабе
-
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
-
-#### 2. Создайте форк
-
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
-
-<img width="769" alt="Press 'Fork'" src="https://cloud.githubusercontent.com/assets/259739/20264045/a1ddbf40-aa7a-11e6-9a1a-724a1c0123c8.png">
-
-Получится вот так:
-
-<img width="769" alt="Forked" src="https://cloud.githubusercontent.com/assets/259739/20264122/f63219a6-aa7a-11e6-945a-89818fc7c014.png">
-
-#### 3. Клонируйте репозиторий на свой компьютер
-
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
-
-<img width="769" alt="SSH" src="https://cloud.githubusercontent.com/assets/259739/20264180/42704126-aa7b-11e6-9ab4-73372b812a53.png">
-
-Клонировать репозиторий можно так:
-
-```
-git clone SSH-адрес_вашего_форка
+```bash
+cd project
+npm install && npm start
 ```
 
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
-
-#### 4. Начинайте обучение!
-
 ---
 
-<a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
+## Features
 
-Репозиторий создан для обучения на профессиональном онлайн‑курсе «[React. Разработка сложных клиентских приложений](https://htmlacademy.ru/intensive/react)» от [HTML Academy](https://htmlacademy.ru).
+
+* [You can filter rental listings by city (gif)](https://i.imgur.com/a0oyrN7.gif)
+
+* [Each listing is represented on the map and highlighted if you hover over it (gif)](https://i.imgur.com/oW4N0YX.gif)
+
+* [Listings can be sorted by some properties (gif)](https://i.imgur.com/sKhO2WH.gif)
+
+### If you signed in
+
+* [Listings can be added to favorites](https://i.imgur.com/B5EQsr5.gif)
+* [Favorite items can be accessed by clicking on user email ](https://i.imgur.com/nGfZ3MY.gif)
+* [You can leave a review and set rating on a detailed page of any listing](https://i.imgur.com/q8qITAX.gif)
